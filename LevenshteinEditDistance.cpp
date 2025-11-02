@@ -6,7 +6,6 @@ using namespace std;
 
 int levenshtein( string& S1, const string& S2) {
     int changes = 0;
-    // Compute the Levenshtein distance
     int size1 = S1.size();
     int size2 = S2.size();
 
