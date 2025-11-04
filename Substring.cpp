@@ -54,12 +54,16 @@ vector<string> loadWords(const string& filename) {
 }
 
 
-string joinWords(const vector<string>& words, int start, int end) {
+string joinWords(const vector<string>& words, int startWord, int maxChars) {
     string res;
-    for (int i = start; i < end && i < (int)words.size(); ++i)
-        res += words[i];
+    for (int i = startWord; i < (int)words.size(); ++i) {
+        string add = (res.empty() ? words[i] : "" + words[i]);
+        if ((int)res.size() + (int)add.size() > maxChars) break;
+        res += add;
+    }
     return res;
 }
+
 
 int main() {
     ios::sync_with_stdio(false);
@@ -69,6 +73,7 @@ int main() {
     vector<string> w2 = loadWords("book2.txt");
 
     const int WINDOW = 5000;
+    
 
     int block1len = 0;
     int block2len = 0;
@@ -77,12 +82,12 @@ int main() {
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < (int)w1.size(); i += WINDOW) {
         string part1 = joinWords(w1, i, i + WINDOW);
-
         for (int j = 0; j < (int)w2.size(); j += WINDOW) {
             string part2 = joinWords(w2, j, j + WINDOW);
 
             string sub = lcSub(part1, part2);
             if (sub.size() > bestSub.size()) {
+            
                 block1len = part1.size();
                 block2len = part2.size();
                 bestSub = sub;
@@ -93,6 +98,7 @@ int main() {
     }
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = end - start;
+
 
     cout << "\n============================\n";
     cout << "Longest common substring overall:\n";
