@@ -18,9 +18,6 @@ string cleanText(const string& filename) {
     return text;
 }
 
-#include <bits/stdc++.h>
-using namespace std;
-
 string rabinKarpLCS(const string& S1, const string& S2) {
     if (S1.empty() || S2.empty()) return "";
 
